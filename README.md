@@ -33,13 +33,3 @@ Fire up the flask app with...
 export FLASK_APP=server.py
 python server.py
 ```
-# Paperweight Python Keyword Extractor
-
-Uses rake-nltk to extract keywords from a RIS file. RIS files are posted to the root path via a json api, and return the processed keywords.
-
-## Run
-
-```
-export FLASK_APP=server.py
-flask run
-```
