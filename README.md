@@ -30,6 +30,8 @@ Parsing the keywords and data science stuff is done in Python, run the flask app
 Fire up the flask app with...
 
 ```
+pip install -r requirements.txt
+python -m spacy download en
 export FLASK_APP=server.py
-python server.py
+flask run
 ```

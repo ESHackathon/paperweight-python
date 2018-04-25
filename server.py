@@ -1,8 +1,12 @@
 from flask import Flask, jsonify, request
 from rake_nltk import Rake
+from keyword_extraction import calculate_keywords
+from textrank import text_rank
+import nltk
 
 
 app = Flask(__name__)
+nltk.download('averaged_perceptron_tagger')
 
 @app.route('/', methods=["POST"])
 def extract_keyword():
@@ -12,10 +16,11 @@ def extract_keyword():
         abstracts = [publication["abstract"] for publication in json_dict["publications"]]
         abstracts = list(filter(None, abstracts))
 
-        data = extract_keywords(abstracts)
-        data = [array[:5] for array in data]
-        data = [item for sublist in data for item in sublist]
-        data = {"keywords": data}
+        keywords_data = extract_keywords(abstracts)
+        text_rank_data = text_rank(json_dict)
+        #  data = [array[:5] for array in data]
+        #  data = [item for sublist in data for item in sublist]
+        data = {"keywords": keywords_data, "text_rank": text_rank_data}
 
         return jsonify(data)
     else:
@@ -25,11 +30,5 @@ def extract_keyword():
 
 def extract_keywords(abstracts):
     # Takes in an array of abstracts and performs keyword extraction on each
-    processed = []
-    for abstract in abstracts:
-        rake = Rake()
-        rake.extract_keywords_from_text(abstract)
-        processed.append(rake.get_ranked_phrases())
-    return processed
-
-
+    all_abstracts = " ".join(abstracts)
+    return calculate_keywords(all_abstracts)

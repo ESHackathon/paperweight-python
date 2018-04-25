@@ -1,0 +1,11 @@
+nltk
+rake_nltk
+flask_cors
+flask
+pprint
+spacy==1.8.2
+networkx==1.11
+datasketch==1.2.1
+graphviz==0.7.1
+statistics==1.0.3.5
+pytextrank
